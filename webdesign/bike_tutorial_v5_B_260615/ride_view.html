@@ -53,8 +53,8 @@
                 <div id="go-bike-navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="index.html">ALL RIDES</a></li>
-                        <li><a href="#">SUBMIT A RIDE</a></li>
-                        <li><a href="#">MY ACCOUNT</a></li>
+                       <!--  <li><a href="#">SUBMIT A RIDE</a></li>
+                        <li><a href="#">MY ACCOUNT</a></li> -->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">EN</a></li>
@@ -88,7 +88,7 @@
                                 <h2>Ride:</h2>
                             </div>
                             <div class="col-md-11 text-left">
-                                <h2>Geneva, My Favorite Ride</h2>
+                                <h2 class="extra-padding-left">Geneva, My Favorite Ride</h2>
                             </div>
                         </div>
                     </div>
@@ -436,16 +436,16 @@
         <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script>
 
-        var infowindow = null;
+            var infowindow = null;
+
             $(document).ready(function () { initialize();  });
 
             function initialize() {
 
-                var centerMap = new google.maps.LatLng(45.763444, 4.835667);
-
+                // var centerMap = new google.maps.LatLng(45.975951, 5.573571);
                 var myOptions = {
-                    zoom: 9,
-                    center: new google.maps.LatLng(45.946625, 5.495522),
+                    zoom: 8,
+                    center: new google.maps.LatLng(46.259983, 5.657341),
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
 
@@ -453,19 +453,37 @@
 
                 setMarkers(map, sites);
                 infowindow = new google.maps.InfoWindow({
-                        content: "loading..."
+                        content: "loading...",
+                        maxWidth: 350
+
                     });
+
+
+                // var goldStar = {
+                //     path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+                //     fillColor: 'yellow',
+                //     fillOpacity: 0.8,
+                //     scale: 1,
+                //     strokeColor: 'gold',
+                //     strokeWeight: 10
+                //   };
+
+                // var newMarker = new google.maps.newMarker({
+                //     position: new google.maps.LatLng(45.753015, 4.829156),
+                //     icon: goldStar,
+                //     map: map
+                //   });
+
 
                 var bikeLayer = new google.maps.BicyclingLayer();
                 bikeLayer.setMap(map);
             }
 
             var sites = [
-            ['Montalieu-Vercieu', 45.809907, 5.393899, 1, 'This is Montalieu-Vercieu, a very interesting place to stop and admire its architecture.'],
-            ['Hauteville-Lompnes', 45.976218, 5.612252, 2, 'This is Hauteville-Lompnes, almost half of the ride done. Nice place to eat something local.'],
-            ['Geneva', 46.195290, 6.143715, 3, 'This is Geneva. We finally arrived! The capital city worths the ride. Time to get some chocolates!'],
-        ];
-
+                ['Montalieu-Vercieu', 45.809907, 5.393899, 1, '<p><strong>Montalieu-Vercieu</strong></p><p class="infowindow-text">This is Montalieu-Vercieu, a very interesting place to stop and admire its architecture.</p><p><span><img src="images/3.jpg" style="width: 50%;"></p>'],
+                ['Hauteville-Lompnes', 45.976218, 5.612252, 2, '<p><strong>Hauteville-Lompnes</strong></p><p class="infowindow-text">This is Hauteville-Lompnes, almost half of the ride done. Nice place to eat something local.</p>'],
+                ['Geneva', 46.195290, 6.143715, 3, '<p><strong>Geneva</strong></p><p class="infowindow-text">This is Geneva. We finally arrived! The capital city worths the ride. Time to get some chocolates!</p>', '<img src="images/cycling.png">'],
+            ];
 
 
             function setMarkers(map, markers) {
@@ -478,12 +496,24 @@
                         map: map,
                         title: sites[0],
                         zIndex: sites[3],
-                        html: sites[4]
+                        html: sites[4],
+                        icon: sites[5]
+                        // html: sites[4]
                     });
+
+                    // var newMarker = new google.maps.Marker ({
+                    //     position: map.getCenter(),
+                    //     icon: {
+                    //         path: google.maps.SymbolPath.CIRCLE,
+                    //         scale: 8
+                    //     },
+                    //     draggable: true,
+                    //     map: map
+                    // });
 
                     var contentString = "Some content";
 
-                    google.maps.event.addListener(marker, "click", function () {
+                    google.maps.event.addListener(marker, "mouseover", function () {
                         // alert(this.html);
                         infowindow.setContent(this.html);
                         infowindow.open(map, this);
