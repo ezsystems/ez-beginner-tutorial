@@ -238,7 +238,8 @@
 
                     <div class="col-xs-8 col-xs-offset-2">
                         <div class="well">
-                            <h4>Leave a comment</h4>
+                            <img src="image/ez_disqus.png">
+                            <!-- <h4>Leave a comment</h4>
                             <form role="form" class="clearfix">
                                 <div class="col-xs-6 form-group">
                                     <label class="sr-only" for="name">Name</label>
@@ -255,7 +256,7 @@
                                 <div class="col-xs-12 form-group text-right">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                            </form>                   
+                            </form>    -->                
                         </div>
                     </div>
                 </div>
@@ -456,92 +457,83 @@
         <!-- Google Maps scripts -->
         <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script>
-
-            var infowindow = null;
-
-            $(document).ready(function () { initialize();  });
-
-            function initialize() {
-
-                // var centerMap = new google.maps.LatLng(45.975951, 5.573571);
-                var myOptions = {
-                    zoom: 8,
-                    center: new google.maps.LatLng(46.259983, 5.657341),
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
-
-                var map = new google.maps.Map(document.getElementById("map-container"), myOptions);
-
-                setMarkers(map, sites);
-                infowindow = new google.maps.InfoWindow({
-                        content: "loading...",
-                        maxWidth: 350
-
-                    });
-
-
-                // var goldStar = {
-                //     path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-                //     fillColor: 'yellow',
-                //     fillOpacity: 0.8,
-                //     scale: 1,
-                //     strokeColor: 'gold',
-                //     strokeWeight: 10
-                //   };
-
-                // var newMarker = new google.maps.newMarker({
-                //     position: new google.maps.LatLng(45.753015, 4.829156),
-                //     icon: goldStar,
-                //     map: map
-                //   });
-
-
-                var bikeLayer = new google.maps.BicyclingLayer();
-                bikeLayer.setMap(map);
-            }
-
-            var sites = [
-                ['Lyon', 45.753015, 4.829156, 1, '<span><img src="images/cycling.png"></span><span><p style="margin-left: 40px; margin-top: -30px;"><strong>Lyon</strong></p></span><p class="infowindow-text">Start!</p>', ],
-                ['Montalieu-Vercieu', 45.809907, 5.393899, 2, '<p><strong>Montalieu-Vercieu</strong></p><p class="infowindow-text">This is Montalieu-Vercieu, a very interesting place to stop and admire its architecture.</p><p><span><img src="images/3.jpg" style="width: 50%;"></p>'],
-                ['Hauteville-Lompnes', 45.976218, 5.612252, 3, '<p><strong>Hauteville-Lompnes</strong></p><p class="infowindow-text">This is Hauteville-Lompnes, almost half of the ride done. Nice place to eat something local.</p>'],
-                ['Geneva', 46.195290, 6.143715, 4, '<span><img src="images/finish.png"></span><p style="margin-left: 40px; margin-top: -30px;"><strong>Geneva</strong></p><p class="infowindow-text">This is Geneva. We finally arrived! The capital city worths the ride. Time to get some chocolates!</p>', ],
+            // Define your locations: HTML content for the info window, latitude & longitude
+            var locations = [
+                ['<strong>Lyon</strong><p class="infowindow-text">Start!</p>', 45.753015, 4.829156],
+                ['<strong>Montalieu-Vercieu</strong><p class="infowindow-text">This is Montalieu-Vercieu, a very interesting place to stop and admire its architecture.</p><p><span><img src="images/3.jpg" style="width: 50%;"></p>', 45.809907, 5.393899],
+                ['<strong>Hauteville-Lompnes</strong><p class="infowindow-text">This is Hauteville-Lompnes, almost half of the ride done. Nice place to eat something local.</p>', 45.976218, 5.612252],
+                ['<strong>Geneva</strong><p class="infowindow-text">Finish! This is Geneva. We finally arrived! The capital city worths the ride. Time to get some chocolates!</p>', 46.195290, 6.143715]
             ];
+    
+            // Setup the different icons and shadows
+            var iconURLPrefix = 'http://maps.google.com/mapfiles/ms/icons/';
+    
+            var icons = [
+              iconURLPrefix + 'orange-dot.png',
+              iconURLPrefix + 'green-dot.png',
+              iconURLPrefix + 'green-dot.png',
+              iconURLPrefix + 'blue-dot.png',
+            ]
+            var iconsLength = icons.length;
 
+            var map = new google.maps.Map(document.getElementById('map-container'), {
+              zoom: 8,
+              center: new google.maps.LatLng(45.975951, 5.573571),
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              mapTypeControl: false,
+              streetViewControl: false,
+              panControl: false,
+              zoomControlOptions: {
+                 position: google.maps.ControlPosition.LEFT_BOTTOM
+              }
+            });
 
-            function setMarkers(map, markers) {
+            var bikeLayer = new google.maps.BicyclingLayer();
+                bikeLayer.setMap(map);
 
-                for (var i = 0; i < markers.length; i++) {
-                    var sites = markers[i];
-                    var siteLatLng = new google.maps.LatLng(sites[1], sites[2]);
-                    var marker = new google.maps.Marker({
-                        position: siteLatLng,
-                        map: map,
-                        title: sites[0],
-                        zIndex: sites[3],
-                        html: sites[4],
-                        icon: sites[5]
-                        // html: sites[4]
-                    });
+            var infowindow = new google.maps.InfoWindow({
+              maxWidth: 350
+            });
 
-                    // var newMarker = new google.maps.Marker ({
-                    //     position: map.getCenter(),
-                    //     icon: {
-                    //         path: google.maps.SymbolPath.CIRCLE,
-                    //         scale: 8
-                    //     },
-                    //     draggable: true,
-                    //     map: map
-                    // });
+            var markers = new Array();
+    
+            var iconCounter = 0;
+    
+            // Add the markers and infowindows to the map
+            for (var i = 0; i < locations.length; i++) {  
+              var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                map: map,
+                icon: icons[iconCounter]
+              });
 
-                    var contentString = "Some content";
+              markers.push(marker);
 
-                    google.maps.event.addListener(marker, "mouseover", function () {
-                        // alert(this.html);
-                        infowindow.setContent(this.html);
-                        infowindow.open(map, this);
-                    });
+              google.maps.event.addListener(marker, 'mouseover', (function(marker, i) {
+                return function() {
+                  infowindow.setContent(locations[i][0]);
+                  infowindow.open(map, marker);
                 }
+              })(marker, i));
+              
+              iconCounter++;
+              // We only have a limited number of possible icon colors, so we may have to restart the counter
+              if(iconCounter >= iconsLength) {
+                iconCounter = 0;
+              }
             }
+
+            function autoCenter() {
+              //  Create a new viewpoint bound
+              var bounds = new google.maps.LatLngBounds();
+              //  Go through each...
+              for (var i = 0; i < markers.length; i++) {  
+                        bounds.extend(markers[i].position);
+              }
+              //  Fit these bounds to the map
+              map.fitBounds(bounds);
+            }
+            autoCenter();
 
         </script>
     </body>
