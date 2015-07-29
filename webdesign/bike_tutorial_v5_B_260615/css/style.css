@@ -1,10 +1,15 @@
 p, span {
-  font-family: 'Roboto Slab';
+  font-family: 'Helvetica', Arial, sans-serif;
   font-size: 16px;
 }
 
+h2 {
+  font-family: 'Roboto Slab';
+  font-weight: bold;
+}
+
 h3 {
-  font-family: 'Fjalla One';
+  font-family: 'Roboto Slab';
   font-style: italic;
   color: #ffffff;
   text-shadow: 1px 1px #454545;
@@ -75,10 +80,6 @@ a:hover {
   .navbar-brand img {
     width: 30%;
     margin-top: 0.35em;
-  }
-
-  .footer-color-two img {
-    width: 17%;
   }
 
   .navbar-brand {
@@ -178,13 +179,27 @@ table a {
   color: #2C3E50;
 }
 
+.table tr td:nth-child(1) {
+  width: 20%;
+}
+
+.table tr td:nth-child(2) {
+  width: 35%;
+}
+
+
+.header-link-table {
+  font-family: 'Roboto Slab', sans-serif;
+  font-style: normal;
+  margin-top: -1px;
+  font-size: 1.25em;
+}
+
 .new-header {
-  /*font-family: 'Fjalla One';*/
   font-style: normal;
   color: black;
   padding: 0.5em 0em 2em 0em;
-  /*text-shadow: 1px 1px #454545;*/
-  /*font-size: 1.75em;*/
+  font-family: 'Fjalla One', sans-serif;
 }
 
 .pagination>li>a {
@@ -286,33 +301,6 @@ table a {
   border-top: 3px solid #419e76;
 }
 
-/*.picture-half {
-  width: 50%;
-  height: 300px;
-  background-image: url(../images/Bike_field.png);
-  background-repeat: center no-repeat;
-  margin: 0 auto;
-  position: relative;
-  background-position: center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-}
-
-.green-box-half {
-  width: 50%;
-  height: 300px;
-  background-color: #16A085;
-  margin: 0 auto;
-  position: relative;
-  background-position: center;
-   -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  -o-background-size: cover;
-}*/
-
 .footer-text {
   margin: 0 auto;
   width: 75%;
@@ -399,6 +387,12 @@ table a {
 
 #carousel-box {
   border-radius: 2px;
+}
+
+.infowindow-text {
+  font-size: 1.1em;
+  font-family: Helvetica, Arial, sans-serif;
+  text-align: justify;
 }
 
 /******* Modals ******/
@@ -540,3 +534,10 @@ hr {
   font-size: 0.8em;
 }
 
+.img-responsive {
+  width: 100%;
+}
+
+.extra-padding-left {
+  padding-left: 1em; 
+}
