@@ -3,23 +3,7 @@
 
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="eZ Systems - Beginner tutorial" content="eZ Systems where content meets business">
-    <meta name="Bike Tutorial" content="eZ Systems tutorial">
-
-    <title>Beginners Tutorial - Bike Rides</title>
-
-    <!-- Bootstrap Core CSS -->
-    {% stylesheets  filter='cssrewrite'
-    '@EzTutorialBikeBundle/Resources/css/bootstrap.min.css'
-    '@EzTutorialBikeBundle/Resources/css/bootstrap-theme.css'
-    '@EzTutorialBikeBundle/Resources/css/style.css'
-    '@EzTutorialBikeBundle/Resources/css/normalize.css' %}
-    <link rel="stylesheet" type="text/css" href="{{ asset_url }}"/>
-    {% endstylesheets %}
-
+    {{ include('EzTutorialBikeBundle::page_head_css.html.twig')}}
 </head>
 
 <body>
@@ -79,9 +63,9 @@
                     <thead>
                     <tr class="table-header">
                         <th>{% image '@EzTutorialBikeBundle/Resources/images/3.jpg' %}
-                                        <img src="{{ asset_url }}" alt="3" class="img-rounded"
-                                             style="width: 20%;"/>
-                                        {% endimage %}</th>
+                            <img src="{{ asset_url }}" alt="3" class="img-rounded"
+                                 style="width: 20%;"/>
+                            {% endimage %}</th>
                         <th>Name</th>
                         <th>Starting Point</th>
                         <th>Length</th>

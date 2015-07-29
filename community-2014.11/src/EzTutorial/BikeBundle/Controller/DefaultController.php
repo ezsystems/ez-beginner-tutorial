@@ -15,9 +15,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
+    /**
+     * @param $name
+     * @return Response
+     */
     public function indexAction($name)
     {
-        $rideList = $this->findRidesAction(65);
+        $folderId = 65;
+        $rideList = $this->findRidesAction($folderId);
         return $this->render('EzTutorialBikeBundle:Default:index.html.twig', array('name' => $name, 'rideList' => $rideList));
     }
 

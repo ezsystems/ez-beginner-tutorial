@@ -63,6 +63,17 @@ ezpublish:
                 # TTL cache (http) in seconds
                 # Note that Http cache for a given content is always invalidated when publishing that content
                 default_ttl: 300
+            location_view:
+#                full:
+#                    ride:
+#                    controller: "EzTutorialBikeBundle:Default:showRide"
+#                    template: "EzTutorialBikeBundle:full:ride.html.twig"
+#                        match:
+#                            Identifier\ContentType: [ride]
+#                    frontpage:
+#                        controller: "EzTutorialBikeBundle:Default:listRides"
+#                        match:
+#                            Identifier\ContentType: [Folder]
         fre:
             languages:
                 - fre-FR
