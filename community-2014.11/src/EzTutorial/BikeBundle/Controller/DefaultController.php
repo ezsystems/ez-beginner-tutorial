@@ -27,38 +27,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @return Response
-     */
-    public function listRidesAction()
-    {
-        $response = new Response();
-        $rides = null;
-
-
-        // Using the criteria helper (a demobundle custom service) to generate our query's criteria.
-        // This is a good practice in order to have less code in your controller.
-        $criteria = new Criteria();
-
-        // Generating query
-        $query = new Query();
-        $query->criterion = $criteria;
-        $query->sortClauses = array(
-            new SortClause\Field('ride', 'creation_date', Query::SORT_DESC)
-        );
-
-        $rides = $this->searchService->findContent($query);
-
-        return $this->render(
-            'EzTutorialBikeBundle:frontpage.html.twig',
-            array(
-                'content' => $rides,
-            ),
-            $response
-        );
-
-    }
-
-    /**
      * @param int $folderId
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws NotFoundHttpException
