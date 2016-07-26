@@ -37,6 +37,11 @@ ezpublish:
                         match:
                             Id\Location: 2
                     full_ride:
-                        template: "content/view/full/ride.html.twig"
+                        template: "full/ride.html.twig"
                         match:
                             Identifier\ContentType: "ride"
+                line:
+                    line_point_of_interest:
+                        template: 'line/point_of_interest.html.twig'
+                        match:
+                            Identifier\ContentType: ['point_of_interest']
