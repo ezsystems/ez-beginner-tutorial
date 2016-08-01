@@ -32,14 +32,14 @@ ezpublish:
         default:
             content_view:
                 full:
-                    root_folder:
-                        template: "full/root_folder.html.twig"
-                        match:
-                            Id\Location: 2
                     full_ride:
                         template: "full/ride.html.twig"
                         match:
                             Identifier\ContentType: "ride"
+                    root_folder:
+                        template: "full/root_folder.html.twig"
+                        match:
+                            Id\Location: 2
                 line:
                     line_point_of_interest:
                         template: 'line/point_of_interest.html.twig'
