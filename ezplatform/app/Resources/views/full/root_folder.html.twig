@@ -1,5 +1,10 @@
 {% extends "pagelayout.html.twig" %}
+
 {% block content %}
-  <h3 class="center bottom-plus new-header">{{ ez_content_name(content) }}</h3>
-  <div class="col-xs-10 text-justified">{{ ez_render_field(content, 'description') }}</div>
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+    <h3 class="center bottom-plus new-header">{{ ez_content_name(content) }}</h3>
+    <div class="col-xs-10 text-justified">
+    {{ render( controller( "AppBundle:Homepage:getAllRides" ) ) }}
+
 {% endblock %}
