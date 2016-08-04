@@ -1,0 +1,39 @@
+<div class="row regular-content-size">
+    <div class="col-xs-10 col-xs-offset-1 box-style">
+        <h3 class="center bottom-plus new-header">List of all Rides</h3>
+        {# Loop over the page results #}
+        {% for ride in pagerRides %}
+            {% if loop.first %}
+            <table class="table table-hover">
+                <thead>
+                <tr class="table-header">
+                    <th> Ride</th>
+                    <th>&nbsp;</th>
+                    <th>From - To</th>
+                    <th>Distance</th>
+                    <th>Level</th>
+                </tr>
+                </thead>
+                <tbody>
+            {% endif %}
+          <tr class="">
+          <td colspan="2">
+            {#{{ ez_render_field(ride, 'name') }}#}
+            <h3 class="header-link-table">
+            <a href="{{ path( "ez_urlalias", { 'locationId': content.contentInfo.mainLocationId } ) }}" target="_self">
+                     {{ ez_content_name( ride, 'name' ) }}
+                 </a>
+              </h3>
+          </td>
+          <td>{{ ez_field_value(ride, 'starting_point') }} - {{ ez_field_value(ride, 'ending_point') }}</td>
+          <td>{{ ez_render_field(ride, 'length') }}</td>
+          <td>{{ ez_render_field(ride, 'level') }}</td>
+            {#{{ render( controller( 'ez_content:viewLocation', { 'locationId': ride.versionInfo.contentInfo.mainLocationId, 'viewType': 'line' } )) }}#}
+          </tr>
+            {% if loop.last %}
+                </tbody>
+            </table>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

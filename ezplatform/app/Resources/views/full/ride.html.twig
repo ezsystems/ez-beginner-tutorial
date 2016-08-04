@@ -65,13 +65,13 @@
 
         </div>
         <div class="col-xs-10 col-xs-offset-1 padding-box">
-        <div class="col-xs-10">
-          <div class="col-xs-2 text-right">
-            <p>Description:</p>
-          </div>
-          <div class="col-xs-10 text-justify">
-            {{ ez_render_field( content, 'description') }}
-          </div>
+          <div class="col-xs-10">
+            <div class="col-xs-2 text-right">
+              <p>Description:</p>
+            </div>
+            <div class="col-xs-10 text-justify">
+              {{ ez_render_field( content, 'description') }}
+            </div>
           </div>
 
         </div>
@@ -80,4 +80,105 @@
 
     </div>
   </section>
+
+
+
+  {# Displaying Points of interest, injected via RideController.php, viewRideWithPOIAction function #}
+  {% for point in pointOfInterestList %}
+    {% if loop.first %}
+      <section class="photos">
+      <div class="container">
+      <div class="row regular-content-size">
+      <div class="col-xs-10 col-xs-offset-1" id="wrapper">
+      <div class="col-xs-12">
+        <h4 class="underscore-green">Points of interest:</h4>
+      </div>
+    {% endif %}
+
+    {{ render( controller( "ez_content:viewLocation", { 'locationId': point.contentInfo.mainLocationId, 'viewType': 'line'} )) }}
+
+    {% if loop.last %}
+      </div>
+      </div>
+      </div>
+      </section>
+    {% endif %}
+  {% endfor %}
+  <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script>
+    // Define your locations: HTML content for the info window, latitude & longitude
+    var locations = [
+      [ '<p class="infowindow-text">Start!</p>', "{{ ez_field_value(content, "starting_point").latitude}}", "{{ ez_field_value(content, "starting_point").longitude }}", 'orange-dot.png']
+      {% for point in pointOfInterestList %}
+      ,
+      ['<p><span>{{ ez_render_field( point, 'photo', { parameters: { 'alias': 'small' }}) }}</span></p>', '{{ ez_field_value( point, "place").latitude}}', '{{ ez_field_value( point, "place").longitude }}', 'green-dot.png']
+      {% endfor %}
+      ,
+      [ '<p class="infowindow-text">End!</p>', "{{ ez_field_value(content, "ending_point").latitude}}", "{{ ez_field_value(content, "ending_point").longitude }}", 'blue-dot.png']
+    ];
+
+    var iconURLPrefix = 'http://maps.google.com/mapfiles/ms/icons/';
+
+    var map = new google.maps.Map(document.getElementById('map-container'), {
+      zoom: 8,
+      center: new google.maps.LatLng("{{ ez_field_value(content, "starting_point").latitude}}", "{{ ez_field_value(content, "ending_point").latitude}}"),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      streetViewControl: false,
+      panControl: false,
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_BOTTOM
+      }
+    });
+
+    var bikeLayer = new google.maps.BicyclingLayer();
+    bikeLayer.setMap(map);
+
+    var infowindow = new google.maps.InfoWindow({
+                                                  maxWidth: 200
+                                                });
+
+    var markers = [];
+
+    var iconCounter = 0;
+
+    // Add the markers and infowindows to the map
+    for (
+      var i = 0; i < locations.length; i++
+      )
+    {
+      var marker = new google.maps.Marker({
+                                            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                                            map: map,
+                                            icon: iconURLPrefix + locations[i][3]
+                                          });
+
+      markers.push(marker);
+
+      google.maps.event.addListener(marker, 'mouseover', (function (marker, i)
+      {
+        return function ()
+        {
+          infowindow.setContent(locations[i][0]);
+          infowindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+
+    function autoCenter()
+    {
+      //  Create a new viewpoint bound
+      var bounds = new google.maps.LatLngBounds();
+      //  Go through each...
+      for (
+        var i = 0; i < markers.length; i++
+        )
+      {
+        bounds.extend(markers[i].position);
+      }
+      //  Fit these bounds to the map
+      map.fitBounds(bounds);
+    }
+    autoCenter();
+  </script>
 {% endblock %}
