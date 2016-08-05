@@ -20,7 +20,7 @@
           <td colspan="2">
             {#{{ ez_render_field(ride, 'name') }}#}
             <h3 class="header-link-table">
-            <a href="{{ path( "ez_urlalias", { 'locationId': content.contentInfo.mainLocationId } ) }}" target="_self">
+            <a href="{{ path( "ez_urlalias", { 'locationId': ride.contentInfo.mainLocationId } ) }}" target="_self">
                      {{ ez_content_name( ride, 'name' ) }}
                  </a>
               </h3>
